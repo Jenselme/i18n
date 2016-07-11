@@ -22,6 +22,7 @@ var I18N = exports.I18N = function () {
     
 
     this.globalVars = {};
+    this.params = {};
     this.i18nextDefered = {
       resolve: null,
       promise: null
@@ -146,7 +147,13 @@ var I18N = exports.I18N = function () {
   I18N.prototype.updateValue = function updateValue(node, value, params) {
     var _this4 = this;
 
-    this.i18nextDefered.promise.then(function () {
+    if (params) {
+      this.params[value] = params;
+    } else if (this.params[value]) {
+      params = this.params[value];
+    }
+
+    return this.i18nextDefered.promise.then(function () {
       return _this4._updateValue(node, value, params);
     });
   };

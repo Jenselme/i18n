@@ -33,8 +33,8 @@ System.register(['./i18n'], function (_export, _context) {
           } else if (df) {
             console.warn('This ValueConverter signature is depcrecated and will be removed in future releases. Please use the signature [dfOrOptions, locale]');
           } else {
-              df = this.service.df(dfOrOptions, locale || this.service.getLocale());
-            }
+            df = this.service.df(dfOrOptions, locale || this.service.getLocale());
+          }
 
           return df.format(value);
         };

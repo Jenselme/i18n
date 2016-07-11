@@ -382,6 +382,7 @@ var I18N = exports.I18N = function () {
     _classCallCheck(this, I18N);
 
     this.globalVars = {};
+    this.params = {};
     this.i18nextDefered = {
       resolve: null,
       promise: null
@@ -506,7 +507,13 @@ var I18N = exports.I18N = function () {
   I18N.prototype.updateValue = function updateValue(node, value, params) {
     var _this5 = this;
 
-    this.i18nextDefered.promise.then(function () {
+    if (params) {
+      this.params[value] = params;
+    } else if (this.params[value]) {
+      params = this.params[value];
+    }
+
+    return this.i18nextDefered.promise.then(function () {
       return _this5._updateValue(node, value, params);
     });
   };
@@ -646,8 +653,8 @@ var DfValueConverter = exports.DfValueConverter = function () {
     } else if (df) {
       console.warn('This ValueConverter signature is depcrecated and will be removed in future releases. Please use the signature [dfOrOptions, locale]');
     } else {
-        df = this.service.df(dfOrOptions, locale || this.service.getLocale());
-      }
+      df = this.service.df(dfOrOptions, locale || this.service.getLocale());
+    }
 
     return df.format(value);
   };
